@@ -24,6 +24,7 @@ Usage
       library(ggpyramid)
       library(dint)
       library(forcats)
+      library(purrr)
 
 As an example, I have downloaded some data from [Statistic
 Denmark](https://www.dst.dk/en) using the R-package

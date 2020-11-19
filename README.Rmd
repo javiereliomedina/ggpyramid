@@ -38,6 +38,7 @@ remotes::install_github("javiereliomedina/ggpyramid")
   library(ggpyramid)
   library(dint)
   library(forcats)
+  library(purrr)
 
 ```
 
