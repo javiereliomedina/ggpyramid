@@ -18,12 +18,6 @@ Installation
 Usage
 -----
 
-I have download the population data from [Statistic
-Denmark](https://www.dst.dk/en), with the package *danstat*.
-
-
-      library(danstat) 
-      library(tidyverse)
     #> -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
     #> v ggplot2 3.3.2     v purrr   0.3.4
     #> v tibble  3.0.4     v dplyr   1.0.2
@@ -32,9 +26,10 @@ Denmark](https://www.dst.dk/en), with the package *danstat*.
     #> -- Conflicts ------------------------------------------ tidyverse_conflicts() --
     #> x dplyr::filter() masks stats::filter()
     #> x dplyr::lag()    masks stats::lag()
-      library(ggpyramid)
-      library(dint)
-      library(forcats)
+
+I have download the population data from [Statistic
+Denmark](https://www.dst.dk/en), with the package *danstat*.
+
 
     # Load data from Denmark using (danstat) ----
       
