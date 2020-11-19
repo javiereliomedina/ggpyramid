@@ -25,8 +25,9 @@ Usage
       library(dint)
       library(forcats)
 
-I have download the population data from [Statistic
-Denmark](https://www.dst.dk/en), with the package *danstat*.
+As an example, I have downloaded some data from [Statistic
+Denmark](https://www.dst.dk/en) using the R-package
+[danstat](https://cran.r-project.org/web/packages/danstat/vignettes/Introduction_to_danstat.html).
 
 
     # Load data from Denmark using (danstat) ----
@@ -36,7 +37,7 @@ Denmark](https://www.dst.dk/en), with the package *danstat*.
     ## Define var_input
 
       # Codes
-      var_codes <- c("OMRÅDE", "KØN", "ALDER", "HERKOMST", "IELAND", "Tid")
+      var_codes <- c("OMRÅDE", "KØN", "ALDER", "HERKOMST", "Tid")
       
       # Values
       ## Region: Denmark
@@ -47,13 +48,10 @@ Denmark](https://www.dst.dk/en), with the package *danstat*.
       id_age <- subset(var_pop$values[[3]], id != "IALT")$id
       ## Ancestry
       id_ancestry <- c(5, 4, 3)
-      ## country of origin (remove total)
-      id_citizen <- as.numeric(var_pop$values[[5]]$id)
-      id_citizen <- id_citizen[id_citizen > 0]
       ## Quarters
       id_quarter <- "2020K4"
 
-      var_values <- list(id_region, id_gender, id_age , id_ancestry, id_citizen, id_quarter)
+      var_values <- list(id_region, id_gender, id_age , id_ancestry, id_quarter)
       var_input <- purrr::map2(.x = var_codes, .y = var_values, .f = ~list(code = .x, values = .y))
         
     # Get data 
@@ -62,7 +60,6 @@ Denmark](https://www.dst.dk/en), with the package *danstat*.
                gender = KØN,
                age = ALDER,
                ancestry = HERKOMST,
-               origin = IELAND,
                date = TID, 
                pop = INDHOLD) %>% 
         # Format date
@@ -79,22 +76,38 @@ Denmark](https://www.dst.dk/en), with the package *danstat*.
                age = gsub(" years", "", age),
                age = factor(age, levels = id_age))
 
-One we have the data we can plot the population pyramid:
+We can use the default settings for plotting the population pyramid:
 
 
     data %>% 
-      ggpyramid()
+      ggpyramid() 
 
-![](man/figures/README-pyramid_gender-1.png)<!-- --> We can also change
-the labels:
+![](man/figures/README-pyramid_gender-1.png)<!-- -->
+
+We can also use another variable for changing fill aesthetic
+(i.e. ancestry), and use standard *ggplot* function for adding
+additional layers:
 
 
     data %>% 
-      ggpyramid(fill = ancestry)
+      ggpyramid(fill = ancestry) +
+      labs(title = "Population pyramith of Denmark",
+           caption = "Source: Statistics Denmark") + 
+      annotate(geom = "text",
+               y = c(100000 , 100000),
+               x = 20.5,
+               label = "Women",
+               fontface = "bold",
+               size = 3) +
+      annotate(geom = "text",
+               y = c(-100000,-100000),
+               x = 20.5,
+               label = "Men",
+               fontface = "bold",
+               size = 3)
 
 ![](man/figures/README-pyramid_migrs-1.png)<!-- --> We can also plot the
-population in percentage, and use standard *ggplot* operations for
-tuning the plot:
+population in percentage:
 
 
       brks_y <- seq(-4, 4, 1)
