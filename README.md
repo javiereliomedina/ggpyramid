@@ -106,8 +106,9 @@ additional layers:
                fontface = "bold",
                size = 3)
 
-![](man/figures/README-pyramid_migrs-1.png)<!-- --> We can also plot the
-population in percentage:
+![](man/figures/README-pyramid_migrs-1.png)<!-- -->
+
+We can also plot the population in percentage:
 
 
       brks_y <- seq(-4, 4, 1)
@@ -126,12 +127,15 @@ population in percentage:
         annotate(geom = "text", y = c(2 , 2),  x = 20.5, label = "Women", fontface = "bold", size = 3) +
         annotate(geom = "text", y = c(-2,-2),  x = 20.5, label = "Men", fontface = "bold", size = 3)
 
-![](man/figures/README-pyramid_percentage-1.png)<!-- --> \# Notes
+![](man/figures/README-pyramid_percentage-1.png)<!-- -->
 
-I have created this repository for sharing some R-scripts that I have
-developed during my work as postdoctoral researcher at Aalborg
-University, in the project “Global flows of migrants and their impact on
-north European welfare states - FLOW”.
+Notes
+=====
+
+I have created this repository during my work as postdoctoral researcher
+at Aalborg University, in the project “[Global flows of migrants and
+their impact on north European welfare states -
+FLOW](https://www.flow.aau.dk)”.
 
 It is not endorsed by the university or the project, and it is not
 maintained. All the data I use here are public, and my only aim is that
