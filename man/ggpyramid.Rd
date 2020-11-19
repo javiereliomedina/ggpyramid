@@ -41,14 +41,14 @@ library(ggpyramid)
 library(danstat)
 
 # Load data from Denmark using (danstat)
-var_input <- list(list(code = "OMRÃ…DE", values = "000"),
-                  list(code = "KÃ˜N", values = c(1, 2)),
+var_input <- list(list(code = "OMRÅDE", values = "000"),
+                  list(code = "KØN", values = c(1, 2)),
                   list(code = "ALDER", values = seq(0, 125, 1)),
                   list(code = "tid", values = "2020K4"))
 
 get_data("FOLK1A", variables = var_input) \%>\%
-  rename(country = OMRÃ…DE,
-         gender = KÃ˜N,
+  rename(country = OMRÅDE,
+         gender = KØN,
          age = ALDER,
          year = TID,
          pop = INDHOLD) \%>\%
