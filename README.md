@@ -56,7 +56,7 @@ Denmark](https://www.dst.dk/en) using the R-package
         
     ## Get data 
       data <- get_data("FOLK1C", variables = var_input) %>%
-        #Translate to English 
+        #Translate into English 
         rename(region = OMRÅDE,
                gender = KØN,
                age = ALDER,
