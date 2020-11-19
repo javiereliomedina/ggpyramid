@@ -12,7 +12,7 @@ Installation
 ------------
 
 
-    # install.packages("remotes")
+    if (!require("remotes")) install.packages("remotes")
     remotes::install_github("javiereliomedina/ggpyramid")
 
 Usage
@@ -30,7 +30,7 @@ Denmark](https://www.dst.dk/en) using the R-package
 [danstat](https://cran.r-project.org/web/packages/danstat/vignettes/Introduction_to_danstat.html).
 
 
-    # Load data from Denmark using (danstat) ----
+    # Load data from Denmark using (danstat) 
       
       var_pop <- get_table_metadata(table_id = "FOLK1C", variables_only = TRUE)
 
@@ -54,8 +54,9 @@ Denmark](https://www.dst.dk/en) using the R-package
       var_values <- list(id_region, id_gender, id_age , id_ancestry, id_quarter)
       var_input <- purrr::map2(.x = var_codes, .y = var_values, .f = ~list(code = .x, values = .y))
         
-    # Get data 
-      data <- get_data("FOLK1C", variables = var_input) %>% 
+    ## Get data 
+      data <- get_data("FOLK1C", variables = var_input) %>%
+        #Translate to English 
         rename(region = OMRÅDE,
                gender = KØN,
                age = ALDER,
@@ -69,8 +70,7 @@ Denmark](https://www.dst.dk/en) using the R-package
         # Format ancestry 
         mutate(ancestry = ifelse(ancestry == "Persons of Danish origin", "Danish", ancestry),
                ancestry = factor(ancestry), 
-               ancestry = fct_relevel(ancestry, "Immigrants", after = 1)
-               ) %>% 
+               ancestry = fct_relevel(ancestry, "Immigrants", after = 1)) %>% 
         # Format age (consecutive levels)  
         mutate(age = ifelse(age == "100 years and over", "100OV", age),
                age = gsub(" years", "", age),
@@ -84,8 +84,8 @@ We can use the default settings for plotting the population pyramid:
 
 ![](man/figures/README-pyramid_gender-1.png)<!-- -->
 
-We can also use another variable for changing fill aesthetic
-(i.e. ancestry), and use standard *ggplot* function for adding
+We can also use another variable for changing the fill aesthetic
+(i.e. ancestry), and use standard *ggplot* functions for adding
 additional layers:
 
 

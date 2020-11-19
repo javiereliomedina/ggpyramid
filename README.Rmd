@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 ```{r, eval = FALSE}
 
-# install.packages("remotes")
+if (!require("remotes")) install.packages("remotes")
 remotes::install_github("javiereliomedina/ggpyramid")
 
 ```
@@ -45,7 +45,7 @@ As an example, I have downloaded some data from [Statistic Denmark](https://www.
 
 ```{r get_data}
 
-# Load data from Denmark using (danstat) ----
+# Load data from Denmark using (danstat) 
   
   var_pop <- get_table_metadata(table_id = "FOLK1C", variables_only = TRUE)
 
@@ -69,8 +69,9 @@ As an example, I have downloaded some data from [Statistic Denmark](https://www.
   var_values <- list(id_region, id_gender, id_age , id_ancestry, id_quarter)
   var_input <- purrr::map2(.x = var_codes, .y = var_values, .f = ~list(code = .x, values = .y))
     
-# Get data 
-  data <- get_data("FOLK1C", variables = var_input) %>% 
+## Get data 
+  data <- get_data("FOLK1C", variables = var_input) %>%
+    #Translate to English 
     rename(region = OMRÅDE,
            gender = KØN,
            age = ALDER,
@@ -84,8 +85,7 @@ As an example, I have downloaded some data from [Statistic Denmark](https://www.
     # Format ancestry 
     mutate(ancestry = ifelse(ancestry == "Persons of Danish origin", "Danish", ancestry),
            ancestry = factor(ancestry), 
-           ancestry = fct_relevel(ancestry, "Immigrants", after = 1)
-           ) %>% 
+           ancestry = fct_relevel(ancestry, "Immigrants", after = 1)) %>% 
     # Format age (consecutive levels)  
     mutate(age = ifelse(age == "100 years and over", "100OV", age),
            age = gsub(" years", "", age),
@@ -102,7 +102,7 @@ data %>%
 
 ```
 
-We can also use another variable for changing fill aesthetic (i.e. ancestry), and use standard *ggplot* function for adding additional layers: 
+We can also use another variable for changing the fill aesthetic (i.e. ancestry), and use standard *ggplot* functions for adding additional layers: 
 
 ```{r pyramid_migrs}
 
