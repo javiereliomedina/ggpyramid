@@ -136,7 +136,7 @@ We can also plot the population in percentage:
   
   data %>% 
     mutate(pop_pct = 100 * pop / sum(pop)) %>% 
-    ggpyramid(pop = pop_pct, fill = ancestry) +
+    ggpyramid(values = pop_pct, fill = ancestry) +
     scale_fill_manual(name = "Ancestry", values = c("#0072B2", "#F0E442", "#D55E00")) +
     scale_y_continuous(name = NULL, breaks = brks_y, labels = lbls_y, limits = lmts_y) +
     labs(title = "Population pyramith of Denmark",

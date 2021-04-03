@@ -2,7 +2,7 @@
 #'
 #' @param data    Data frame with population data by age and gender
 #' @param age     Column with the age groups
-#' @param pop     Column with population counts
+#' @param values  Column with population counts
 #' @param gender  Column with gender data
 #' @param men     How males are define in "gender" (default = "Men")
 #' @param women   How females are defined in "gender" (default = "Women")
@@ -21,17 +21,17 @@
 #'                   list(code = "ALDER", values = seq(0, 125, 1)),
 #'                   list(code = "tid", values = "2020K4"))
 #'
-#' get_data("FOLK1A", variables = var_input) %>%
+#' df <- get_data("FOLK1A", variables = var_input) %>%
 #'   rename(country = OMRÅDE,
 #'          gender = KØN,
 #'          age = ALDER,
 #'          year = TID,
 #'          pop = INDHOLD) %>%
 #'   mutate(age = parse_number(age),
-#'          age = as.integer(age)) -> df
+#'          age = as.integer(age))
 #'
 #' df %>%
-#'   ggpyramid(pop = pop, fill = gender) +
+#'   ggpyramid(values = pop, fill = gender) +
 #'   scale_fill_manual(name = "Gender", values = c("#0072B2", "#F0E442")) +
 #'   labs(title = "Population pyramith of Denmark",
 #'        caption = "Source: Statistics Denmark")
@@ -40,7 +40,7 @@
 
 ggpyramid <- function(data = data,
                       age = age,
-                      pop = pop,
+                      values = pop,
                       gender = gender,
                       men = "Men",
                       women = "Women",
@@ -48,13 +48,13 @@ ggpyramid <- function(data = data,
  ggplot() +
     geom_bar(data = subset( {{ data }}, {{ gender }} == women ),
              aes(x = {{ age }},
-                 y = {{ pop }},
+                 y = {{ values }},
                  fill = {{ fill }}),
              stat = "identity",
              width = 1) +
     geom_bar(data = subset( {{ data }}, {{ gender }} == men ),
              aes(x = {{ age }},
-                 y = - {{ pop }},
+                 y = - {{ values }},
                  fill = {{ fill }}),
              stat = "identity",
              width = 1) +

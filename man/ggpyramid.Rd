@@ -7,7 +7,7 @@
 ggpyramid(
   data = data,
   age = age,
-  pop = pop,
+  values = pop,
   gender = gender,
   men = "Men",
   women = "Women",
@@ -19,7 +19,7 @@ ggpyramid(
 
 \item{age}{Column with the age groups}
 
-\item{pop}{Column with population counts}
+\item{values}{Column with population counts}
 
 \item{gender}{Column with gender data}
 
@@ -41,22 +41,22 @@ library(ggpyramid)
 library(danstat)
 
 # Load data from Denmark using (danstat)
-var_input <- list(list(code = "OMRÅDE", values = "000"),
-                  list(code = "KØN", values = c(1, 2)),
+var_input <- list(list(code = "OMRÃ…DE", values = "000"),
+                  list(code = "KÃ˜N", values = c(1, 2)),
                   list(code = "ALDER", values = seq(0, 125, 1)),
                   list(code = "tid", values = "2020K4"))
 
-get_data("FOLK1A", variables = var_input) \%>\%
-  rename(country = OMRÅDE,
-         gender = KØN,
+df <- get_data("FOLK1A", variables = var_input) \%>\%
+  rename(country = OMRÃ…DE,
+         gender = KÃ˜N,
          age = ALDER,
          year = TID,
          pop = INDHOLD) \%>\%
   mutate(age = parse_number(age),
-         age = as.integer(age)) -> df
+         age = as.integer(age))
 
 df \%>\%
-  ggpyramid(pop = pop, fill = gender) +
+  ggpyramid(values = pop, fill = gender) +
   scale_fill_manual(name = "Gender", values = c("#0072B2", "#F0E442")) +
   labs(title = "Population pyramith of Denmark",
        caption = "Source: Statistics Denmark")
